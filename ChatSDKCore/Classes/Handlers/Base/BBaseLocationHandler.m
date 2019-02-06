@@ -16,11 +16,13 @@
 
 @interface LocationManagerDelegate : NSObject<CLLocationManagerDelegate> {
     RACSubject * _locationSubject;
+    RACSubject * _authorizationSubject;
     CLLocation * _lastLocation;
     id<LastLocationDelegate> _lastLocationDelegate;
 }
 
 - (RACSignal<CLLocation *> *)locationSignal;
+- (RACSignal<NSNumber *> *)authorizationSignal;
 - (CLLocation *)lastLocation;
 
 @end
@@ -33,12 +35,17 @@
     if (self) {
         _lastLocationDelegate = delegate;
         _locationSubject = [RACSubject new];
+        _authorizationSubject = [RACSubject new];
     }
     return self;
 }
 
 - (RACSignal<CLLocation *> *)locationSignal {
     return _locationSubject;
+}
+
+- (RACSignal<NSNumber *> *)authorizationSignal {
+    return _authorizationSubject;
 }
 
 - (CLLocation *)lastLocation {
@@ -56,6 +63,10 @@
     if (_lastLocationDelegate && [_lastLocationDelegate respondsToSelector:@selector(didUpdateLastLocation:)]) {
         [_lastLocationDelegate didUpdateLastLocation:_lastLocation];
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    [_authorizationSubject sendNext:@(status)];
 }
 
 @end
@@ -133,9 +144,21 @@
     }
 }
 
+- (BOOL)isAuthorized {
+    return CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedWhenInUse
+    || CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways;
+}
+
 - (void)requestLocationUpdate {
     if (_locationManager) {
-        [_locationManager startUpdatingLocation];
+        if ([self isAuthorized]) {
+            [_locationManager startUpdatingLocation];
+        } else {
+            [_locationManager requestWhenInUseAuthorization];
+            [[[_locationManagerDelegate authorizationSignal] take:1] subscribeNext:^(NSNumber * status) {
+                [self requestLocationUpdate];
+            }];
+        }
     }
 }
 
