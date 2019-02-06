@@ -1,6 +1,6 @@
 //
 //  PNearbyUsersHandler.h
-//  Pods
+//  ChatSDKModules
 //
 //  Created by Benjamin Smiley-andrews on 13/12/2016.
 //
