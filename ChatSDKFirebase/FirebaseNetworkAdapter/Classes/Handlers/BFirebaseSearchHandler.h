@@ -11,6 +11,6 @@
 
 @interface BFirebaseSearchHandler : NSObject<PSearchHandler>
 
-
+-(RXPromise *) usersForIndexes: (NSArray *) indexes withValue: (NSString *) value limit: (int) limit userAdded: (void(^)(id<PUser> user)) userAdded;
 
 @end

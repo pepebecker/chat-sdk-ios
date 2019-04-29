@@ -49,6 +49,8 @@
 
 @property (nonatomic, readwrite) UIBarButtonItem * addButton;
 
+@property (nonatomic, readwrite) NSString * searchQuery;
+
 -(void) addButtonPressed;
 -(void) clearAndReload;
 -(void) searchWithText: (NSString *) text;

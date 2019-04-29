@@ -101,6 +101,11 @@
     
     self.searchTextField.rightViewMode = UITextFieldViewModeAlways;
     _searchTextFieldRightView = self.searchTextField.rightView;
+
+    if (_searchQuery && _searchQuery.length > 0) {
+        self.searchTextField.text = _searchQuery;
+        [self searchWithText:_searchQuery];
+    }
     
     if ([BChatSDK.search respondsToSelector:@selector(availableIndexes)]) {
         // Get the search terms...
@@ -237,6 +242,17 @@
     if (usersSelected != Nil) {
         usersSelected(@[]);
     }
+//    NSArray<UIViewController *> *controllers = [self.navigationController viewControllers];
+//    if (controllers && controllers.count > 0) {
+//        UIViewController *rootController = [[self.navigationController viewControllers] firstObject];
+//        if([rootController isEqual:self]) {
+//            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//        } else {
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        }
+//    } else {
+//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    }
 }
 
 -(void) addButtonPressed {

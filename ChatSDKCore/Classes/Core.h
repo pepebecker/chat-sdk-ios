@@ -33,6 +33,8 @@
 
 #import <ChatSDK/BCoreUtilities.h>
 #import <ChatSDK/BFileCache.h>
+#import <ChatSDK/BViewControllerUtilities.h>
+#import <ChatSDK/BUserListHelper.h>
 
 #import <ChatSDK/PEntity.h>
 #import <ChatSDK/PEntityWrapper.h>

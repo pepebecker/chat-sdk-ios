@@ -170,11 +170,12 @@
     }
     
     UIViewController * vc = [BChatSDK.ui searchViewControllerWithType:type
-                                                                               excludingUsers:excludedUsers
-                                                                                   usersAdded:^(NSArray * users) {
-                                                                                   [weakSelf addUsers:users];
-                                                                                   [weakSelf dismissViewControllerAnimated:YES completion:Nil];
-                                                                               }];
+                                                       excludingUsers:excludedUsers
+                                                           usersAdded:^(NSArray * users) {
+                                                               [weakSelf addUsers:users];
+                                                               [weakSelf dismissViewControllerAnimated:YES
+                                                                                            completion:Nil];
+                                                           }];
     if(vc) {
         [self presentViewController:vc animated:YES completion:Nil];
     }
