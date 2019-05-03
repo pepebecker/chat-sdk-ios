@@ -15,7 +15,10 @@ target 'ChatSDK Demo' do
 #   pod 'TwitterCore', '<3.1.0'
 #   pod 'GoogleSignIn'
 #   pod 'FBSDKLoginKit'
- 
+
+  pod 'ChatSDKModules/AudioMessage', :path => '../../chat-sdk-ios-modules'
+  pod 'ChatSDKModules/VideoMessage', :path => '../../chat-sdk-ios-modules'
+  pod 'ChatSDKModules/FileMessage', :path => '../../chat-sdk-ios-modules'
   
   #pod "ChatSDKModules/StickerMessage", :path => "../ChatSDKModules"
   #pod "ChatSDKModules/KeyboardOverlayOptions", :path => "../ChatSDKModules"
