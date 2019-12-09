@@ -36,6 +36,7 @@
     if (self) {
         _users = [NSMutableArray new];
         _selectedUsers = [NSMutableArray new];
+        _initialSearchText = @"";
         
         self.title = [NSBundle t: bSearch];
        
@@ -78,6 +79,10 @@
     if (shouldSearch && text.length > limit) {
         [self searchWithText:text];
     }
+}
+
+- (void)setInitialSearchText:(NSString *)text {
+    _initialSearchText = text;
 }
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -165,6 +170,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:Nil];
     
     [self clearAndReload];
+
+    if (_initialSearchText && ![_initialSearchText  isEqual:@""]) {
+        [_searchController.searchBar setText:_initialSearchText];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -184,6 +193,8 @@
     [super viewDidDisappear:animated];
     
     [BChatSDK.hook removeHook:_internetConnectionHook];
+
+    _initialSearchText = @"";
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];

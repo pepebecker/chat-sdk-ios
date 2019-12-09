@@ -34,6 +34,8 @@
     NSArray * _searchIndexes;
     BHook * _internetConnectionHook;
 
+    NSString * _initialSearchText;
+
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -51,7 +53,7 @@
 
 -(void) addButtonPressed;
 -(void) clearAndReload;
--(void) searchWithText: (NSString *) text;
+-(void) setInitialSearchText: (NSString *) text;
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 
 @end
